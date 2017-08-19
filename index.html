@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 	<meta charset="UTF-8">
 	<title>Users Catalog</title>
@@ -9,13 +9,18 @@
 <body>
 	<header>
 		<nav class="wrapper">
-			<img src="images/menu.png" alt="меню" style="display: none">
-			<ul class="tabs">
+			<img src="images/menu.png" alt="меню"  class="btn btn-menu">
+			<ul class="menu">
 				<li class="tab-active"><a href="#catalog">Каталог</a></li>
 				<li><a href="#news">Новости</a></li>
 				<li><a href="#register">Регистрация</a></li>
 			</ul>
-			<img src="images/login.png" alt="авторизация">
+			<img src="images/login.png" alt="авторизация"  class="btn btn-login">
+			<form action="" class="popup-login" style="/*display: none*/">
+				<input type="text" name="login" placeholder="Login">
+				<input type="text" name="Password" placeholder="Password">
+				<input type="submit" value="Enter">
+			</form>
 		</nav>
 	</header>
 	<main class="wrapper">
@@ -44,21 +49,21 @@
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid blanditiis delectus dignissimos eius nihil officiis quae recusandae reprehenderit, temporibus. Ad animi fuga itaque, laudantium nam odit quod reiciendis similique.</p>
 			</article>
 		</section>
-		<section class="tab-content" id="register" style="display: none">
+		<section class="tab-content" id="register" style="/*display: none*/">
 			<form action="">
-				<label class="inp-grey">
+				<label class="inp-default">
 					<span>Имя</span>
 					<input type="text">
 				</label>
-				<label class="inp-red">
+				<label class="inp-warning">
 					<span>Логин</span>
 					<input type="text">
 				</label>
-				<label class="inp-green">
+				<label class="inp-success">
 					<span>Email</span>
 					<input type="email">
 				</label>
-				<label>
+				<label class="inp-default">
 					<span>Пароль</span>
 					<input type="password">
 				</label>
