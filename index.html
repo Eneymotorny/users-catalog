@@ -10,16 +10,16 @@
 	<header>
 		<nav class="wrapper">
 			<img src="images/menu.png" alt="меню" style="display: none">
-			<ul>
-				<li>Каталог</li>
-				<li>Новости</li>
-				<li>Регистрация</li>
+			<ul class="tabs">
+				<li class="tab-active"><a href="#catalog">Каталог</a></li>
+				<li><a href="#news">Новости</a></li>
+				<li><a href="#register">Регистрация</a></li>
 			</ul>
 			<img src="images/login.png" alt="авторизация">
 		</nav>
 	</header>
 	<main class="wrapper">
-		<section id="catalog">
+		<section class="tab-content" id="catalog"  style="/*display: none*/">
 			<table>
 				<tr>
 					<th>Имя</th>
@@ -27,9 +27,9 @@
 					<th>Email</th>
 				</tr>
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>Kbnssd</td>
+					<td>asfdfds</td>
+					<td>asdsdsad@ask.aa</td>
 				</tr>
 				<tr>
 					<td></td>
@@ -38,23 +38,23 @@
 				</tr>
 			</table>
 		</section>
-		<section id="news" style="display: none">
+		<section class="tab-content" id="news" style="display: none">
 			<article>
 				<h2>Ad animi fuga</h2>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid blanditiis delectus dignissimos eius nihil officiis quae recusandae reprehenderit, temporibus. Ad animi fuga itaque, laudantium nam odit quod reiciendis similique.</p>
 			</article>
 		</section>
-		<section id="register" style="display: none">
+		<section class="tab-content" id="register" style="display: none">
 			<form action="">
-				<label>
+				<label class="inp-grey">
 					<span>Имя</span>
 					<input type="text">
 				</label>
-				<label>
-					<span>Фамилия</span>
+				<label class="inp-red">
+					<span>Логин</span>
 					<input type="text">
 				</label>
-				<label>
+				<label class="inp-green">
 					<span>Email</span>
 					<input type="email">
 				</label>
