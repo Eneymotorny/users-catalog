@@ -8,23 +8,27 @@
 </head>
 <body>
 	<header>
-		<nav class="wrapper">
-			<img src="images/menu.png" alt="меню"  class="btn btn-menu">
-			<ul class="menu">
-				<li class="tab-active"><a href="#catalog">Каталог</a></li>
-				<li><a href="#news">Новости</a></li>
-				<li><a href="#register">Регистрация</a></li>
-			</ul>
-			<img src="images/login.png" alt="авторизация"  class="btn btn-login">
-			<form action="" class="popup-login" style="/*display: none*/">
-				<input type="text" name="login" placeholder="Login">
-				<input type="text" name="Password" placeholder="Password">
-				<input type="submit" value="Enter">
-			</form>
+		<nav class="wrapper nav">
+			<img src="images/menu.png" alt="меню" class="btn btn-menu" data-btn>
+			<div class="drop-menu">
+				<ul>
+					<li><a data-tab href="#catalog">Каталог</a></li>
+					<li><a href="#news">Новости</a></li>
+					<li><a href="#register">Регистрация</a></li>
+				</ul>
+			</div>
+			<img src="images/login.png" alt="авторизация"  class="btn btn-login" data-btn>
+			<div class="drop-login">
+				<form action="">
+					<input type="text" name="login" placeholder="Login">
+					<input type="text" name="Password" placeholder="Password">
+					<input type="submit" value="Enter">
+				</form>
+			</div>
 		</nav>
 	</header>
 	<main class="wrapper">
-		<section class="tab-content" id="catalog"  style="/*display: none*/">
+		<section class="tab-content" id="catalog">
 			<table>
 				<tr>
 					<th>Имя</th>
@@ -32,9 +36,9 @@
 					<th>Email</th>
 				</tr>
 				<tr>
-					<td>Kbnssd</td>
-					<td>asfdfds</td>
-					<td>asdsdsad@ask.aa</td>
+					<td>Георгий</td>
+					<td>orwell84</td>
+					<td>orwell84@mail.com</td>
 				</tr>
 				<tr>
 					<td></td>
@@ -43,13 +47,13 @@
 				</tr>
 			</table>
 		</section>
-		<section class="tab-content" id="news" style="display: none">
+		<section class="tab-content" id="news">
 			<article>
 				<h2>Ad animi fuga</h2>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid blanditiis delectus dignissimos eius nihil officiis quae recusandae reprehenderit, temporibus. Ad animi fuga itaque, laudantium nam odit quod reiciendis similique.</p>
 			</article>
 		</section>
-		<section class="tab-content" id="register" style="/*display: none*/">
+		<section class="tab-content" id="register">
 			<form action="">
 				<label class="inp-default">
 					<span>Имя</span>
@@ -72,7 +76,7 @@
 		</section>
 	</main>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="lib/jquery-3.2.1.min.js"></script>
 	<script src="js/script.js"></script>
 </body>
 </html>
