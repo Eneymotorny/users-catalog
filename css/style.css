@@ -59,7 +59,7 @@ nav {
 	z-index: 12;
 }
 .btn-menu.btn-active:after {
-	left: calc(50% - 3vh);
+	left: calc(50% - 50px);
 }
 .drop-menu {
 	height: 100%;
@@ -291,7 +291,6 @@ article > p b {
 	color: #7F7F7F;
 }
 
-
 /*=== MOBILE ===*/
 @media only screen and (max-device-width : 768px), only screen and (max-width: 768px) {
 
@@ -303,20 +302,20 @@ article > p b {
 	}
 	nav.wrapper {
 		position: static;
-		height: 9vh;
+		height: 160px;
 	}
 	nav.wrapper .btn {
-		height: 6vh;
+		height: 100px;
 		max-height: none;
 	}
 	.btn-active:after {
-		right: calc(50%);
-		top: 0.3vh;
-		width: 5.4vh;
-		height: 5.4vh;
+		left: 40%;
+		top: 6px;
+		width: 90px;
+		height: 90px;
 	}
 	/*=== HEADER ===*/
-	header {
+	body > header {
 		margin-bottom: 4px;
 		border-width: 14px;
 	}
@@ -371,7 +370,7 @@ article > p b {
 		max-width: 100vw;
 	}
 	.tab-content th, .tab-content td {
-		height: 2em;
+		height: 2.5em;
 		border-width: 7px;
 	}
 	.tab-content th:first-child,
@@ -391,7 +390,7 @@ article > p b {
 		padding-left: 0;
 	}
 	.tab-content tr:last-child {
-		height: calc(91vh - 22px - 4em);
+		height: calc(91vh - 65px - 4em);
 	}
 
 	/*=== FORM ===*/
