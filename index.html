@@ -9,7 +9,9 @@
 <body>
 	<header>
 		<nav class="wrapper nav">
-			<img src="images/menu.png" alt="меню" class="btn btn-menu" data-btn>
+			<div class="btn btn-menu" data-btn>
+				<img src="images/menu.png" alt="меню">
+			</div>
 			<div class="drop-menu">
 				<ul>
 					<li><a data-tab href="#catalog">Каталог</a></li>
@@ -17,7 +19,9 @@
 					<li><a href="#register">Регистрация</a></li>
 				</ul>
 			</div>
-			<img src="images/login.png" alt="авторизация"  class="btn btn-login" data-btn>
+			<div data-btn class="btn btn-login">
+				<img src="images/login.png" alt="авторизация">
+			</div>
 			<div class="drop-login">
 				<form action="">
 					<input type="text" name="login" placeholder="Login">
@@ -36,9 +40,9 @@
 					<th>Email</th>
 				</tr>
 				<tr>
-					<td>Георгий</td>
-					<td>orwell84</td>
-					<td>orwell84@mail.com</td>
+					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -48,28 +52,24 @@
 			</table>
 		</section>
 		<section class="tab-content" id="news">
-			<article>
-				<h2>Ad animi fuga</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid blanditiis delectus dignissimos eius nihil officiis quae recusandae reprehenderit, temporibus. Ad animi fuga itaque, laudantium nam odit quod reiciendis similique.</p>
-			</article>
 		</section>
 		<section class="tab-content" id="register">
 			<form action="">
-				<label class="inp-default">
+				<label>
 					<span>Имя</span>
-					<input type="text">
+					<input type="text" name="name">
 				</label>
-				<label class="inp-warning">
+				<label>
 					<span>Логин</span>
-					<input type="text">
+					<input type="text" name="login">
 				</label>
-				<label class="inp-success">
+				<label>
 					<span>Email</span>
-					<input type="email">
+					<input type="email" name="email">
 				</label>
-				<label class="inp-default">
+				<label>
 					<span>Пароль</span>
-					<input type="password">
+					<input type="password" name="password">
 				</label>
 				<input type="submit" value="Отправить">
 			</form>

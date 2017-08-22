@@ -24,6 +24,7 @@ $(function () {
 
 				$(document).on('click.interim', function (e) {
 					if ( !$dropBtns.is(e.target)
+						&& $dropBtns.has(e.target).length === 0
 						&& !$dropMenus.is(e.target)
 						&& $dropMenus.has(e.target).length === 0
 						&& $dropMenus.has(e.target).length === 0) {
@@ -78,12 +79,14 @@ $(function () {
 		if (!this.active) {
 			this.dropMenu.slideDown(150);
 			this.active = true;
+			this.btn.addClass('btn-active')
 		} else {
 			this.dropMenu.slideUp(150);
 			setTimeout(function () {
 				_this.dropMenu.removeAttr('style');
+				_this.btn.removeClass('btn-active')
 			}, 200);
-			this.active = false
+			this.active = false;
 		}
 	};
 
@@ -106,10 +109,129 @@ $(function () {
 		this.active = false
 	};
 
+	function Form(formSelector, bindCatalog) {
+		this.form = $(formSelector);
+		this.inputs = this.getInputs();
+		this.values = {};
+		var _this = this;
+		this.submit = $(formSelector).find('[type="submit"]')
+			.on('click', function (e) {
+			e.preventDefault();
+			if ( _this.validateAll() ){
+				bindCatalog.createUser(_this.getValues())
+			}
+		});
+	}
+	Form.prototype.getInputs = function (inp) {
+		var $inps = this.form.find('input:not([type="submit"])')
+			.attr('required', 'required');
+		$inps.parent().addClass('inp-default');
+		$inps.filter('[type="password"]').attr('minlength', 4).attr('maxlength', 20);
+
+		var _this = this;
+		$inps.blur(function () {
+			_this.validate( $(this) )
+		});
+
+		return $inps
+	};
+	Form.prototype.validate = function (inp) {
+		inp = $(inp);
+		var inpType = (inp.attr('type') === 'text')? inp.attr('name'): inp.attr('type');
+
+		var pattern;
+		switch (inpType) {
+			case 'name': pattern = /^[а-я-ёaїієґ`a-z]+$/i; break;
+			case 'login': pattern = /^[a-z][a-z0-9-_]{1,20}$/; break;
+			case 'email': pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; break;
+			default: break;
+			case 'password': pattern = /^[^\s]{4,20}$/; break;
+		}
+		var result = false;
+
+		if (inp.val().trim() === '') {
+			inp.val( inp.val().trim() );
+			inp.parent().removeClass().addClass('inp-warning inp-empty');
+			setTimeout(function () {
+				inp.parent().removeClass().addClass('inp-default');
+			}, 4000)
+		}
+		else {
+			if (inp.val().search(pattern) === 0){
+				inp.parent().removeClass().addClass('inp-success');
+				result = true
+			} else {
+				inp.parent().removeClass().addClass('inp-warning');
+			}
+		}
+		return result
+	};
+	Form.prototype.validateAll = function () {
+		var _this = this;
+		this.inputs.each(function (indx, elem) {
+			var $elem = $(elem);
+			if ( _this.validate(elem) ) {
+				_this.values[ $elem.attr('name') ] = $elem.val();
+			} else {
+				delete _this.values[ $elem.attr('name') ];
+			}
+		});
+		return ( Object.keys(this.values).length === this.inputs.length )
+	};
+	Form.prototype.getValues = function () {
+		var _this = this;
+		setTimeout(function () {
+			_this.inputs.val('');
+			_this.inputs.parent().removeClass().addClass('inp-default');
+		}, 500);
+		return this.values
+	};
+
+	function UserCatalog(tableSelector, newsSelector) {
+		this.table = $(tableSelector);
+		this.newsArea = $(newsSelector);
+		this.users = [];
+		this.news = [];
+	}
+	UserCatalog.prototype.createUser = function (objUser) {
+		var current = this.users.push(objUser) - 1;
+		this.addUser(this.users[current]);
+
+		var date = new Date();
+		this.news.push({
+			date: date.getFullYear() + '.' + date.getMonth() + '.' + date.getDate(),
+			time: date.getHours() + ':' + date.getMinutes() + ':' +date.getSeconds(),
+			text: 'Зарегистрирован пользователь <b>'+ objUser.name +'</b> под ником <b>'+ objUser.login +'</b>'
+		});
+		this.addArticle(this.news[current]);
+
+	};
+	UserCatalog.prototype.addUser = function (objUser) {
+		var $lastTr = this.table.find('tr:nth-last-child(2)');
+		$('<tr>').insertBefore($lastTr)
+			.append('<td>'+ objUser.name +'</td>')
+			.append('<td>'+ objUser.login +'</td>')
+			.append('<td>'+ objUser.email +'</td>');
+	};
+	UserCatalog.prototype.addArticle = function (objArt) {
+		$('<article>' +
+				'<header>' +
+					'<h3>System Info</h3>' +
+					'<div class="metainf">' +
+						'<b>&#9881; system </b><small>&#128197; '+ objArt.date +' </small><time>&#128337; '+ objArt.time +'</time>' +
+					'</div>' +
+				'</header>' +
+				'<p>&#128712; '+ objArt.text +'</p>' +
+			'</article>').appendTo(this.newsArea);
+	};
+
 	var nav = new NavBar('.nav');
 	nav.elem.find('[type="submit"]').on('click', function (e) {
 		e.preventDefault();
 		nav.hideOtherDropMenus()
 	});
+
+	var catalog = new UserCatalog('#catalog table', '#news');
+	var form = new Form('.tab-content form', catalog);
 
 });

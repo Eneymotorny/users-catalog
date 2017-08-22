@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 * {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 body {
@@ -17,7 +19,7 @@ input {
 }
 
 /*=== HEADER ===*/
-header {
+body > header {
 	border-bottom: 8px solid #000;
 	margin-bottom: 10px;
 }
@@ -32,10 +34,32 @@ nav {
 
 .btn {
 	cursor: pointer;
-/*	max-height: 61px;*/
+	display: block;
+	max-height: 61px;
+	position: relative;
+}
+.btn img {
+	height: 100%;
 }
 .btn-menu {
 	display: none;
+}
+.btn-active:after {
+	content:"";
+	display: block;
+	position: absolute;
+	left: calc(50% - 15px);
+	top: 3px;
+	width: 53px;
+	height: 53px;
+	background: #ebcc26;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+	z-index: 12;
+}
+.btn-menu.btn-active:after {
+	left: calc(50% - 3vh);
 }
 .drop-menu {
 	height: 100%;
@@ -155,6 +179,11 @@ nav {
 }
 
 /*=== FORM ===*/
+.tab-content form * {
+	transition-property: background, color, border-color, box-shadow;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+}
 .tab-content form {
 	margin-top: 30px;
 	font-weight: bold;
@@ -230,6 +259,9 @@ nav {
 	bottom: 0.9em;
 	left: 20px;
 }
+.tab-content .inp-empty:after {
+	content: 'Неверный формат вводимых данных (пустое поле)';
+}
 .tab-content .inp-warning input:focus {
 	-webkit-box-shadow: inset 0 0 6px 1px  #e83014;
 	-moz-box-shadow: inset 0 0 6px 1px  #e83014;
@@ -246,6 +278,20 @@ nav {
 	box-shadow: inset 0 0 6px 1px  #329d30;
 }
 
+article {
+	border-bottom: 1px solid #e3e3e3;
+	padding-bottom: 24px;
+	margin: 10px 5vw 50px 5vw;
+}
+article > p b {
+	color: #413d8b;
+}
+
+.metainf span {
+	color: #7F7F7F;
+}
+
+
 /*=== MOBILE ===*/
 @media only screen and (max-device-width : 768px), only screen and (max-width: 768px) {
 
@@ -259,8 +305,15 @@ nav {
 		position: static;
 		height: 9vh;
 	}
-	nav.wrapper img {
+	nav.wrapper .btn {
 		height: 6vh;
+		max-height: none;
+	}
+	.btn-active:after {
+		right: calc(50%);
+		top: 0.3vh;
+		width: 5.4vh;
+		height: 5.4vh;
 	}
 	/*=== HEADER ===*/
 	header {
