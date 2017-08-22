@@ -123,10 +123,8 @@ $(function () {
 		});
 	}
 	Form.prototype.getInputs = function (inp) {
-		var $inps = this.form.find('input:not([type="submit"])')
-			.attr('required', 'required');
+		var $inps = this.form.find('input:not([type="submit"])');
 		$inps.parent().addClass('inp-default');
-		$inps.filter('[type="password"]').attr('minlength', 4).attr('maxlength', 20);
 
 		var _this = this;
 		$inps.blur(function () {
@@ -141,11 +139,11 @@ $(function () {
 
 		var pattern;
 		switch (inpType) {
-			case 'name': pattern = /^[а-я-ёaїієґ`a-z]+$/i; break;
-			case 'login': pattern = /^[a-z][a-z0-9-_]{1,20}$/; break;
-			case 'email': pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; break;
+			case 'name': pattern = /^[а-я-ёaїієґ`a-z]{1,30}$/i; inp.attr('minlength', 2).attr('maxlength', 50); break;
+			case 'login': pattern = /^[a-z][a-z0-9-_]{1,30}$/i; inp.attr('minlength', 2).attr('maxlength', 30); break;
+			case 'email': pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;  inp.attr('minlength', 2).attr('maxlength', 50); break;
+			case 'password': pattern = /^[^\s]{4,20}$/; inp.attr('minlength', 4).attr('maxlength', 20); break;
 			default: break;
-			case 'password': pattern = /^[^\s]{4,20}$/; break;
 		}
 		var result = false;
 
@@ -190,12 +188,13 @@ $(function () {
 	function UserCatalog(tableSelector, newsSelector) {
 		this.table = $(tableSelector);
 		this.newsArea = $(newsSelector);
-		this.users = [];
-		this.news = [];
+		this.users = localStorage.users? JSON.parse(localStorage.users): [];
+		this.news = localStorage.news? JSON.parse(localStorage.news): [];
 	}
 	UserCatalog.prototype.createUser = function (objUser) {
 		var current = this.users.push(objUser) - 1;
 		this.addUser(this.users[current]);
+		localStorage.users = JSON.stringify(this.users);
 
 		var date = new Date();
 		this.news.push({
@@ -204,6 +203,7 @@ $(function () {
 			text: 'Зарегистрирован пользователь <b>'+ objUser.name +'</b> под ником <b>'+ objUser.login +'</b>'
 		});
 		this.addArticle(this.news[current]);
+		localStorage.news = JSON.stringify(this.news);
 
 	};
 	UserCatalog.prototype.addUser = function (objUser) {
@@ -224,7 +224,18 @@ $(function () {
 				'<p>&#128712; '+ objArt.text +'</p>' +
 			'</article>').appendTo(this.newsArea);
 	};
-
+	UserCatalog.prototype.addAllData = function () {
+		if (this.users.length) {
+			for (var i = 0; i < this.users.length; i++) {
+				this.addUser(this.users[i])
+			}
+		}
+		if (this.news.length) {
+			for (var j = 0; j < this.news.length; j++) {
+				this.addArticle(this.news[j])
+			}
+		}
+	};
 	var nav = new NavBar('.nav');
 	nav.elem.find('[type="submit"]').on('click', function (e) {
 		e.preventDefault();
@@ -234,4 +245,5 @@ $(function () {
 	var catalog = new UserCatalog('#catalog table', '#news');
 	var form = new Form('.tab-content form', catalog);
 
+	catalog.addAllData()
 });

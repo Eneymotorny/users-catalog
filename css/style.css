@@ -156,8 +156,14 @@ nav {
 .tab-content td, th {
 	border: 5px solid #c88f67;
 	font-weight: bold;
-	word-wrap: break-word;
 	height: 60px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: keep-all;
+	line-break: loose;
+	-webkit-hyphens: none; -ms-hyphens: none; hyphens: none;
+	width: 50%;
+
 }
 .tab-content th:first-child,
 .tab-content td:first-child {
@@ -176,6 +182,19 @@ nav {
 }
 .tab-content tr:last-child td {
 	border-bottom: none;
+}
+
+/*=== NEWS ===*/
+article {
+	border-bottom: 1px solid #e3e3e3;
+	padding-bottom: 24px;
+	margin: 10px 5vw 50px 5vw;
+}
+article > p b {
+	color: #413d8b;
+}
+.metainf span {
+	color: #7F7F7F;
 }
 
 /*=== FORM ===*/
@@ -235,6 +254,9 @@ nav {
 	-moz-box-shadow: inset 0 0 6px 1px  #b1b1b1;
 	box-shadow: inset 0 0 6px 1px  #b1b1b1;
 }
+.tab-content .inp-warning span{
+	width: 21%;
+}
 .tab-content .inp-warning span,
 .tab-content .inp-warning input {
 	box-sizing: content-box;
@@ -278,19 +300,6 @@ nav {
 	box-shadow: inset 0 0 6px 1px  #329d30;
 }
 
-article {
-	border-bottom: 1px solid #e3e3e3;
-	padding-bottom: 24px;
-	margin: 10px 5vw 50px 5vw;
-}
-article > p b {
-	color: #413d8b;
-}
-
-.metainf span {
-	color: #7F7F7F;
-}
-
 /*=== MOBILE ===*/
 @media only screen and (max-device-width : 768px), only screen and (max-width: 768px) {
 
@@ -328,7 +337,7 @@ article > p b {
 		background-color: #000;
 		width: 100vw;
 		height: auto;
-		top: 9vh;
+		top: 160px;
 		left: 0;
 		z-index: 12;
 	}
@@ -355,7 +364,7 @@ article > p b {
 
 	/*=== POPUP ===*/
 	.drop-login {
-		top: 9vh;
+		top: 160px;
 	}
 	.drop-login form {
 		width: 100vw;
@@ -369,28 +378,33 @@ article > p b {
 	.tab-content table {
 		max-width: 100vw;
 	}
-	.tab-content th, .tab-content td {
-		height: 2.5em;
+	.tab-content table th, .tab-content table td {
+		height: 3.5em;
 		border-width: 7px;
+		padding: 20px 30px;
 	}
 	.tab-content th:first-child,
 	.tab-content td:first-child {
-		width:27%;
+		width:26%;
 		border-left: none;
 	}
+/*	.tab-content td:first-child,
+	.tab-content td:nth-child(2) {
+		padding-left: 40px;
+	}*/
 	.tab-content th:nth-child(2),
 	.tab-content td:nth-child(2) {
-		width:33%;
+		width:32%;
 	}
 	.tab-content th:last-child,
 	.tab-content td:last-child {
-		width: 40%;
+		width: 46%;
 		border-right: none;
 		text-align: center;
-		padding-left: 0;
+		/*padding-left: 0;*/
 	}
 	.tab-content tr:last-child {
-		height: calc(91vh - 65px - 4em);
+		height: calc(100vh - 260px - 5em);
 	}
 
 	/*=== FORM ===*/
