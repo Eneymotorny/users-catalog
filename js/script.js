@@ -192,7 +192,11 @@ $(function () {
 		this.news = localStorage.news? JSON.parse(localStorage.news): [];
 	}
 	UserCatalog.prototype.createUser = function (objUser) {
-		var current = this.users.push(objUser) - 1;
+		var current = this.users.length, user = {};
+		for (var key in objUser) {
+			if ( objUser.hasOwnProperty(key)) user[key] = objUser[key];
+		}
+		this.users.push(user);
 		this.addUser(this.users[current]);
 		localStorage.users = JSON.stringify(this.users);
 
