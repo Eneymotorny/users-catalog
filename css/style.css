@@ -254,32 +254,29 @@ article > p b {
 	-moz-box-shadow: inset 0 0 6px 1px  #b1b1b1;
 	box-shadow: inset 0 0 6px 1px  #b1b1b1;
 }
-.tab-content .inp-warning span{
+/*.tab-content .inp-warning span{
 	width: 21%;
-}
+}*/
 .tab-content .inp-warning span,
 .tab-content .inp-warning input {
-	box-sizing: content-box;
 	color: #e83014;
 	border-color: #e83014;
-	border-bottom-width: 45px;
-}
-.tab-content .inp-warning input {
-	height: 68px;
 }
 .tab-content .inp-warning {
-	margin-bottom: 12px;
 	position: relative;
 }
 .tab-content .inp-warning:after {
 	content: 'Неверный формат вводимых данных';
+	background-color: #e83014;
+	padding: 1.2em 1.4em 1em 1.4em;
 	font-size: 0.6em;
 	font-weight: bold;
 	letter-spacing: 0.8px;
 	color: #fff;
 	position: absolute;
-	bottom: 0.9em;
-	left: 20px;
+	bottom: calc(-2.6em - 4px);
+	box-sizing: border-box;
+	width: 100% ;
 }
 .tab-content .inp-empty:after {
 	content: 'Неверный формат вводимых данных (пустое поле)';
@@ -388,10 +385,6 @@ article > p b {
 		width:26%;
 		border-left: none;
 	}
-/*	.tab-content td:first-child,
-	.tab-content td:nth-child(2) {
-		padding-left: 40px;
-	}*/
 	.tab-content th:nth-child(2),
 	.tab-content td:nth-child(2) {
 		width:32%;
@@ -401,7 +394,6 @@ article > p b {
 		width: 46%;
 		border-right: none;
 		text-align: center;
-		/*padding-left: 0;*/
 	}
 	.tab-content tr:last-child {
 		height: calc(100vh - 260px - 5em);
@@ -446,14 +438,6 @@ article > p b {
 		color: #fff;
 		background-color: #e83014;
    }
-   .tab-content .inp-warning input {
-	   height: 90px;
-	   border-bottom: 60px solid;
-	   width: calc(100% - 14px - 1em);
-   }
-	.tab-content .inp-warning {
-		margin-bottom: 40px;
-	}
 	.tab-content .inp-success span {
 		color: #fff;
 		background-color: #329d30;

@@ -236,7 +236,7 @@ $(function () {
 		if (this.news.length) {
 			for (var j = 0; j < this.news.length; j++) {
 				if ( typeof( this.news[j]) !== 'string' ) { //  Сохранение совместимости с предыдущей версией;
-					this.news[j] =  this.news[j].text        //  добавленые ранее новости будут отображаться корректно
+					this.news[j] =  this.news[j].text       //  добавленые ранее новости будут отображаться корректно
 				}
 				this.addArticle(this.news[j])
 			}
@@ -253,5 +253,3 @@ $(function () {
 
 	catalog.addAllData()
 });
-
-// змінено порядок додавання новин, деякі покращення методів UserCatalog
