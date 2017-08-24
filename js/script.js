@@ -200,7 +200,10 @@ $(function () {
 		this.addUser(this.users[current]);
 		localStorage.users = JSON.stringify(this.users);
 
-		this.news.push('Зарегистрирован пользователь <b>'+ objUser.name +'</b> под ником <b>'+ objUser.login +'</b>');
+		this.news.push({
+			text: 'Зарегистрирован пользователь <b>' + objUser.name + '</b> под ником <b>' + objUser.login + '</b>',
+			date: UserCatalog.getDateTime()
+		});
 		this.addArticle(this.news[current]);
 		localStorage.news = JSON.stringify(this.news);
 
@@ -212,19 +215,21 @@ $(function () {
 			.append('<td>'+ objUser.login +'</td>')
 			.append('<td>'+ objUser.email +'</td>');
 	};
-	UserCatalog.prototype.addArticle = function (text) {
-		var curntDate = new Date();
-		var date = curntDate.getFullYear() + '.' + curntDate.getMonth() + '.' + curntDate.getDate(),
-			 time = curntDate.getHours() + ':' + curntDate.getMinutes() + ':' + curntDate.getSeconds();
-
+	UserCatalog.prototype.addArticle = function (objArt) {
+		if ( typeof(objArt) === 'string' ) {
+			objArt = {
+				text: objArt,
+				date: { date: 'ранее', time: 'неизвестно' }
+			}
+		}
 		$('<article>' +
 				'<header>' +
 					'<h3>System Info</h3>' +
 					'<div class="metainf">' +
-						'<b>&#9881; system </b><small>&#128197; '+ date +' </small><time>&#128337; '+ time +'</time>' +
+						'<b>&#9881; system </b><small>&#128197; '+ objArt.date.date +' </small><time>&#128337; '+ objArt.date.time +'</time>' +
 					'</div>' +
 				'</header>' +
-				'<p>&#128712; '+ text +'</p>' +
+				'<p>&#128712; '+ objArt.text +'</p>' +
 			'</article>').prependTo(this.newsArea);
 	};
 	UserCatalog.prototype.addAllData = function () {
@@ -235,13 +240,19 @@ $(function () {
 		}
 		if (this.news.length) {
 			for (var j = 0; j < this.news.length; j++) {
-				if ( typeof( this.news[j]) !== 'string' ) { //  Сохранение совместимости с предыдущей версией;
-					this.news[j] =  this.news[j].text       //  добавленые ранее новости будут отображаться корректно
+					this.addArticle(this.news[j])
 				}
-				this.addArticle(this.news[j])
-			}
 		}
 	};
+	UserCatalog.prototype.getDateTime = function () {
+		var curntDate = new Date();
+		return {
+			date : curntDate.getFullYear() + '.' + curntDate.getMonth() + '.' + curntDate.getDate(),
+			time : curntDate.getHours() + ':' + curntDate.getMinutes() + ':' + curntDate.getSeconds()
+		}
+	};
+
+
 	var nav = new NavBar('.nav');
 	nav.elem.find('[type="submit"]').on('click', function (e) {
 		e.preventDefault();
