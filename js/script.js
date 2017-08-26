@@ -1,6 +1,17 @@
 'use strict';
 
 $(function () {
+	function getCurntDate() {
+		var date = new Date();
+		return date.getFullYear() + '.' + date.getMonth() + '.' + date.getDate()
+	}
+	function getCurntTime() {
+		var date = new Date();
+		var hrs = (date.getHours() < 10)? '0' + date.getHours(): date.getHours(),
+			min = (date.getMinutes() < 10)? '0' + date.getMinutes(): date.getMinutes(),
+			sec = (date.getSeconds() < 10)? '0' + date.getSeconds(): date.getSeconds();
+		return hrs + ':' + min + ':' + sec
+	}
 
 	function NavBar(selector) {
 		this.elem = $(selector);
@@ -116,11 +127,11 @@ $(function () {
 		var _this = this;
 		this.submit = $(formSelector).find('[type="submit"]')
 			.on('click', function (e) {
-			e.preventDefault();
-			if ( _this.validateAll() ){
-				bindCatalog.createUser(_this.getValues())
-			}
-		});
+				e.preventDefault();
+				if ( _this.validateAll() ){
+					bindCatalog.createUser(_this.getValues())
+				}
+			});
 	}
 	Form.prototype.getInputs = function (inp) {
 		var $inps = this.form.find('input:not([type="submit"])');
@@ -192,19 +203,20 @@ $(function () {
 		this.news = localStorage.news? JSON.parse(localStorage.news): [];
 	}
 	UserCatalog.prototype.createUser = function (objUser) {
-		var current = this.users.length, user = {};
+		var lastUser = this.users.length, lastArt = this.news.length, user = {};
 		for (var key in objUser) {
 			if ( objUser.hasOwnProperty(key)) user[key] = objUser[key];
 		}
 		this.users.push(user);
-		this.addUser(this.users[current]);
+		this.addUser(this.users[lastUser]);
 		localStorage.users = JSON.stringify(this.users);
 
 		this.news.push({
-			text: 'Зарегистрирован пользователь <b>' + objUser.name + '</b> под ником <b>' + objUser.login + '</b>',
-			date: UserCatalog.getDateTime()
+			date: getCurntDate(),
+			time: getCurntTime(),
+			text: 'Зарегистрирован пользователь <b>'+ objUser.name +'</b> под ником <b>'+ objUser.login +'</b>'
 		});
-		this.addArticle(this.news[current]);
+		this.addArticle(this.news[lastArt]);
 		localStorage.news = JSON.stringify(this.news);
 
 	};
@@ -216,21 +228,15 @@ $(function () {
 			.append('<td>'+ objUser.email +'</td>');
 	};
 	UserCatalog.prototype.addArticle = function (objArt) {
-		if ( typeof(objArt) === 'string' ) {
-			objArt = {
-				text: objArt,
-				date: { date: 'ранее', time: 'неизвестно' }
-			}
-		}
 		$('<article>' +
-				'<header>' +
-					'<h3>System Info</h3>' +
-					'<div class="metainf">' +
-						'<b>&#9881; system </b><small>&#128197; '+ objArt.date.date +' </small><time>&#128337; '+ objArt.date.time +'</time>' +
-					'</div>' +
-				'</header>' +
-				'<p>&#128712; '+ objArt.text +'</p>' +
-			'</article>').prependTo(this.newsArea);
+			'<header>' +
+				'<h3>System Info</h3>' +
+				'<div class="metainf">' +
+					'<b>&#9881; system </b><small>&#128197; '+ objArt.date +' </small><time>&#128337; '+ objArt.time +'</time>' +
+				'</div>' +
+			'</header>' +
+			'<p>&#128712; '+ objArt.text +'</p>' +
+		'</article>').prependTo(this.newsArea);
 	};
 	UserCatalog.prototype.addAllData = function () {
 		if (this.users.length) {
@@ -240,19 +246,25 @@ $(function () {
 		}
 		if (this.news.length) {
 			for (var j = 0; j < this.news.length; j++) {
+				try {
 					this.addArticle(this.news[j])
+				} catch(e) {
+					if (typeof(this.news[j]) === 'string') {
+						var text = this.news[j];
+						this.news[j] = {
+							date: 'ранее',
+							time: 'неизвестно',
+							text: text
+						};
+						this.addArticle(this.news[j]);
+					} else {
+						this.news.splice(j, 1)
+					}
 				}
+			}
 		}
 	};
-	UserCatalog.prototype.getDateTime = function () {
-		var curntDate = new Date();
-		return {
-			date : curntDate.getFullYear() + '.' + curntDate.getMonth() + '.' + curntDate.getDate(),
-			time : curntDate.getHours() + ':' + curntDate.getMinutes() + ':' + curntDate.getSeconds()
-		}
-	};
-
-
+	
 	var nav = new NavBar('.nav');
 	nav.elem.find('[type="submit"]').on('click', function (e) {
 		e.preventDefault();
