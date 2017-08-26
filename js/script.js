@@ -247,8 +247,6 @@ $(function () {
 		if (this.news.length) {
 			for (var j = 0; j < this.news.length; j++) {
 				try {
-					this.addArticle(this.news[j])
-				} catch(e) {
 					if (typeof(this.news[j]) === 'string') {
 						var text = this.news[j];
 						this.news[j] = {
@@ -257,9 +255,12 @@ $(function () {
 							text: text
 						};
 						this.addArticle(this.news[j]);
+						console.log(this.news[j]);
 					} else {
-						this.news.splice(j, 1)
+						this.addArticle(this.news[j]);
 					}
+				} catch(e) {
+					this.news.splice(j, 1)
 				}
 			}
 		}

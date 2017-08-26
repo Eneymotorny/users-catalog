@@ -80,13 +80,24 @@ nav {
 }
 .drop-menu .tab-active {
 	border-color: #000;
+	position: relative;
+}
+.drop-menu .tab-active:after {
+	content: '';
+	background-color: #fff;
+	color: #fff;
+	position: absolute;
+	bottom: -9px;
+	left: 0;
+	width: 100%;
+	height: 9px;
 }
 .drop-menu a {
 	color: inherit;
 	text-decoration: none;
 }
 
-/*=== POPUP ===*/
+/*=== DROP ===*/
 .drop-login {
 	display: none;
 	flex-shrink: 0;
@@ -353,6 +364,9 @@ article > p b {
 	}
 	.drop-menu .tab-active {
 		border-color: #dcb832;
+	}
+	.drop-menu .tab-active:after {
+		display: none;
 	}
 	.drop-menu a {
 		color: inherit;
